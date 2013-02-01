@@ -1,3 +1,5 @@
+require 'knynrh/hi'
+
 class Knynrh
   def run
     service_names.each { |name| launch_service(name) }
