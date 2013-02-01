@@ -1,9 +1,13 @@
 class Knynrh
   def run
-    service_names.each do |service_name|
-      extend find_service(service_name)
-      launch
-    end
+    service_names.each { |name| launch_service(name) }
+  end
+
+  private
+
+  def launch_service(name)
+    extend find_service(name)
+    launch
   end
 
   def service_names

@@ -1,28 +1,50 @@
 require 'knynrh'
 
 describe Knynrh do
+  let(:knynrh) { Knynrh.new }
+
   describe '#run' do
-    it 'should launch each of the services' do
+    it 'should call Knynrh#launch_service with each service name' do
       service_names = ['A', 'B', 'C']
-      services = {}.tap {|hash|
-        service_names.each do |name|
-          hash[name] = Module.new do
-            def launch
-              nil
-            end
-          end
-        end
-      }
-      knynrh = Knynrh.new
 
       knynrh.stub(:service_names).and_return(service_names)
       service_names.each do |name|
-        knynrh.should_receive(:find_service).with(name).and_return(services[name])
+        knynrh.should_receive(:launch_service).with(name)
       end
-      # 各モジュールのlaunchが呼び出されていることをexpectしていない
-      knynrh.should_receive(:launch).exactly(service_names.length)
 
       knynrh.run
+    end
+  end
+
+  describe '#launch_service' do
+    it 'should launch service' do
+      service = Module.new do
+        def launch
+          'service launched'
+        end
+      end
+
+      knynrh.stub(:find_service).and_return(service)
+
+      knynrh.send(:launch_service, mock).should == 'service launched'
+    end
+
+    it 'should launch different services' do
+      service1 = Module.new do
+        def launch
+          'service 1 launched'
+        end
+      end
+      service2 = Module.new do
+        def launch
+          'service 2 launched'
+        end
+      end
+
+      knynrh.stub(:find_service).and_return(service1, service2)
+
+      knynrh.send(:launch_service, mock).should == 'service 1 launched'
+      knynrh.send(:launch_service, mock).should == 'service 2 launched'
     end
   end
 end
