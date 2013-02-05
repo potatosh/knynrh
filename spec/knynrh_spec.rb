@@ -14,6 +14,13 @@ describe Knynrh do
 
       knynrh.run
     end
+
+    it 'should NOT call Knynrh#launch_service when service is empty' do
+      service_names = []
+
+      knynrh.stub(:service_names).and_return(service_names)
+      knynrh.should_receive(:launch_service).exactly(0)
+    end
   end
 
   describe '#launch_service' do
@@ -45,6 +52,14 @@ describe Knynrh do
 
       knynrh.send(:launch_service, mock).should == 'service 1 launched'
       knynrh.send(:launch_service, mock).should == 'service 2 launched'
+    end
+  end
+
+  describe '#find_service' do
+    it 'should raise error when service was NOT found' do
+      service_name = 'undefined_service'
+
+      expect{knynrh.send(:find_service, service_name)}.to raise_error(RuntimeError, "service '#{service_name}' not found")
     end
   end
 end
