@@ -18,7 +18,7 @@ class Knynrh
 
   def find_service(name)
     Knynrh.const_get(name)
-  rescue
+  rescue NameError
     raise "service '#{name}' not found"
   end
 end
