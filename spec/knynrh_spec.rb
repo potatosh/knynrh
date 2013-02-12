@@ -1,4 +1,4 @@
-require 'knynrh'
+require 'spec_helper'
 
 describe Knynrh do
   let(:knynrh) { Knynrh.new }

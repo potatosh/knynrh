@@ -1,4 +1,4 @@
-require 'knynrh'
+require 'spec_helper'
 
 describe Knynrh::Hi do
   let(:knynrh) do
