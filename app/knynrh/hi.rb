@@ -13,7 +13,7 @@ class Knynrh
         set :access_key, ENV['ACCESS_KEY']
         set :access_secret, ENV['ACCESS_SECRET']
 
-        on_time :hour => 19, :min => 40, :sec => 0 do
+        on_time :hour => 18, :min => 30, :sec => 0 do
           tweet 'hi'
         end
       end.run!
