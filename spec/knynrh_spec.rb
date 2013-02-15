@@ -67,7 +67,9 @@ describe Knynrh do
     it 'should raise error when service was NOT found' do
       service_name = 'undefined_service'
 
-      expect{knynrh.send(:find_service, service_name)}.to raise_error(RuntimeError, "service '#{service_name}' not found")
+      expect {
+        knynrh.send(:find_service, service_name)
+      }.to raise_error(RuntimeError, "service '#{service_name}' not found")
     end
   end
 end
