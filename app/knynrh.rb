@@ -13,7 +13,10 @@ class Knynrh
   end
 
   def service_names
-    ENV['SERVICE_NAMES'].split(',')
+    names_string = ENV['SERVICE_NAMES']
+
+    raise "Heroku environment variable 'SERVICE_NAMES' is not defined" if names_string.nil?
+    names_string.split(',')
   end
 
   def find_service(name)

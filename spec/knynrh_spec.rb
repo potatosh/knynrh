@@ -55,6 +55,14 @@ describe Knynrh do
     end
   end
 
+  describe '#service_names' do
+    it 'should raise error when environment variable "SERVICE_NAMES" is NOT defined' do
+      expect {
+        knynrh.send(:service_names)
+      }.to raise_error(RuntimeError, "Heroku environment variable 'SERVICE_NAMES' is not defined")
+    end
+  end
+
   describe '#find_service' do
     it 'should raise error when service was NOT found' do
       service_name = 'undefined_service'
